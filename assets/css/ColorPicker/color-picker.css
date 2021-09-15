@@ -1,0 +1,832 @@
+colorwindow, .color-picker {
+  position: absolute;
+  width: 360px;
+  height: 400px;
+  background-color: #dddddd;
+  z-index: 1000;
+  /*outline: 1px solid #5b5b5b;*/
+  box-shadow: 0 0 0 1px #5b5b5b;
+}
+
+colorwindow:not(.open), .color-picker:not(.open) {
+  display: none;
+}
+
+[theme=dark] colorwindow, [theme=dark] .color-picker {
+  background-color: #121418;
+  /*background-color: #1f2325;*/
+  --colorwindow-border-radius: 10px;
+  border-radius: var(--colorwindow-border-radius);
+}
+
+colorwindow #cp_colorwall, .color-picker #cp_colorwall {
+  position: absolute;
+  width: 330px;
+  height: 200px;
+  top: 15px;
+  left: 15px;
+  outline: 1px ridge #313437;
+}
+
+colorwindow #cp_a_colorwall, .color-picker #cp_a_colorwall {
+  position: absolute;
+  width: 100px;
+  height: 75px;
+  top: 15px;
+  right: -110px;
+  outline: 1px ridge #313437;
+}
+
+colorwindow #cp_a_colorwall:not(.show), .color-picker #cp_a_colorwall:not(.show) {
+  display: none;
+}
+
+colorwindow .color > .sat, .color-picker .color > .sat {
+  width: inherit;
+  height: inherit;
+  background-image: -ms-linear-gradient(left, #fff, rgba(204,154,129,0));
+  background-image: -o-linear-gradient(left, #fff, rgba(204,154,129,0));
+  background-image: -moz-linear-gradient(left, #fff, rgba(204,154,129,0));
+  background-image: -webkit-linear-gradient(left, #fff, rgba(204,154,129,0));
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#fff), to(rgba(204,154,129,0)));
+  background-image: linear-gradient(to right, #fff, rgba(204,154,129,0));
+}
+
+colorwindow .color > .sat > .val, .color-picker .color > .sat > .val {
+  width: inherit;
+  height: inherit;
+  background-image: -ms-linear-gradient(bottom, #000, rgba(204,154,129,0));
+  background-image: -o-linear-gradient(bottom, #000, rgba(204,154,129,0));
+  background-image: -moz-linear-gradient(bottom, #000, rgba(204,154,129,0));
+  background-image: -webkit-linear-gradient(bottom, #000, rgba(204,154,129,0));
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000), to(rgba(204,154,129,0)));
+  background-image: linear-gradient(to top, #000, rgba(204,154,129,0));
+}
+
+colorwindow .cp_cbar, .color-picker .cp_cbar {
+  position: absolute;
+  width: 190px;
+  height: 7px;
+  outline: 1px solid #969696;
+}
+
+colorwindow:not([eyedropper]) .cp_cbar, .color-picker:not([eyedropper]) .cp_cbar {
+  width: 230px;
+}
+
+[theme=dark] colorwindow .cp_cbar, [theme=dark] .color-picker .cp_cbar {
+  outline: 1px solid black;
+}
+
+colorwindow #cp_huebar, .color-picker #cp_huebar {
+  left: 150px;
+  top: 230px;
+  background-image: -webkit-linear-gradient(left, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+  background-image: -o-linear-gradient(left, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+  background-image: -ms-linear-gradient(left, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+  background-image: -moz-linear-gradient(left, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+}
+
+colorwindow:not([eyedropper]) #cp_huebar, .color-picker:not([eyedropper]) #cp_huebar {
+  left: 110px;
+}
+
+colorwindow #cp_transbar, .color-picker #cp_transbar {
+  left: 150px;
+  top: 255px;
+  background-size: contain;
+}
+
+colorwindow:not([eyedropper]) #cp_transbar, .color-picker:not([eyedropper]) #cp_transbar {
+  left: 110px;
+}
+
+colorwindow #cp_transbar .bg, .color-picker #cp_transbar .bg {
+  height: inherit;
+  width: inherit;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), white);
+}
+
+colorwindow .cp_cbar .handle, .color-picker .cp_cbar .handle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 21px;
+  background-color: rgb(198,198,198);
+  /*box-shadow: 0 0 0 1px black;*/
+  border: 1px solid black;
+}
+
+[theme=dark] colorwindow .cp_cbar .handle, [theme=dark] .color-picker .cp_cbar .handle {
+  background-color: #121418;
+  /*border: 1px solid #eeeeee;*/
+  box-shadow: 0 0 0 1.25px #eeeeee;
+}
+
+colorwindow .cp_cbar .handle.smooth:not(.circle), .color-picker .cp_cbar .handle.smooth:not(.circle) {
+  border-radius: 3px;
+}
+
+colorwindow .cp_cbar .handle.circle, .color-picker .cp_cbar .handle.circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 0 1px black;
+}
+
+[theme=dark] colorwindow .cp_cbar .handle.circle, [theme=dark] .color-picker .cp_cbar .handle.circle {
+  box-shadow: 0 0 0 1.5px #eeeeee;
+}
+
+colorwindow .preview, .color-picker .preview {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  top: 230px;
+  box-shadow: 0 0 0 1px rgb(18,20,24);
+}
+
+colorwindow #cp_lastcolor, .color-picker #cp_lastcolor {
+  left: 65px;
+  /*background-color: white;*/
+}
+
+colorwindow:not([eyedropper]) #cp_lastcolor, .color-picker:not([eyedropper]) #cp_lastcolor {
+  left: 20px;
+  /*background-color: white;*/
+}
+
+colorwindow #cp_newcolor, .color-picker #cp_newcolor {
+  left: 95px;
+  /*background-color: white;*/
+}
+
+colorwindow #cp_previewpalette, .color-picker #cp_previewpalette {
+  /*left: 100px;*/
+  /*background-color: white;*/
+}
+
+colorwindow:not([eyedropper]) #cp_newcolor, .color-picker:not([eyedropper]) #cp_newcolor {
+  left: 50px;
+  /*background-color: white;*/
+}
+
+colorwindow:not([eyedropper]) #cp_eyedropperbtn, .color-picker:not([eyedropper]) #cp_eyedropperbtn {
+  position: absolute;
+  left: 15px;
+  top: 230px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background-color: #181d23;
+  border-radius: 25%;
+  border: 1.5px solid #b8b8b8;
+}
+
+colorwindow #cp_eyedropperbtn, .color-picker #cp_eyedropperbtn {
+  display: none;
+}
+
+colorwindow #cp_eyedropperbtn > i.fa.fa-eyedropper, .color-picker #cp_eyedropperbtn > i.fa.fa-eyedropper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+colorwindow #cp_colorvalueinput, .color-picker #cp_colorvalueinput {
+  position: absolute;
+  left: 120px;
+  top: 290px;
+}
+
+colorwindow select:not(#cp_palette):not(#cp_favourites), .color-picker select:not(#cp_palette):not(#cp_favourites) {
+  position: absolute;
+  top: 290px;
+  left: 20px;
+}
+
+[theme=dark] colorwindow input[type=text], [theme=dark] colorwindow input[type=color-value], [theme=dark] colorwindow select, [theme=dark] .color-picker input[type=text], [theme=dark] .color-picker input[type=color-value], [theme=dark] .color-picker select {
+  background-color: #36393d;
+  /*background-color: #41474c;*/
+  border: 1px solid #000000;
+  border-radius: 5px;
+  color: #dddddd;
+}
+
+colorwindow .favourite, .color-picker .favourite {
+  position: absolute;
+  top: 290px;
+  left: 300px;
+  font-size: 25px;
+  width: 28px;
+  height: 28px;
+  transition: font-size 0.25s ease-in;
+}
+
+colorwindow .favourite:hover, .color-picker .favourite:hover {
+  font-size: 35px;
+  transition: font-size 0.5s ease-in;
+}
+
+colorwindow .favourite #cp_favourite, .color-picker .favourite #cp_favourite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #6a767b;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow .favourite #cp_favourite.current, .color-picker .favourite #cp_favourite.current {
+  color: #263e58;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow .favourite #cp_favourite.sesh, .color-picker .favourite #cp_favourite.sesh {
+  color: #f5c20b;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow .favourite #cp_favourite.fav, .color-picker .favourite #cp_favourite.fav {
+  color: #dd1075;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow .favourite #cp_favourite.sesh.custom, .color-picker .favourite #cp_favourite.sesh.custom {
+  color: #852b82;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow .favourite.custom #cp_favourite.fav, .color-picker .favourite #cp_favourite.fav.custom {
+  color: #c22222;
+  transition: 0.25s color ease-in;
+}
+
+colorwindow #cp_accept, .color-picker #cp_accept, colorwindow #cp_cancel, .color-picker #cp_cancel, colorwindow #cp_none, .color-picker #cp_none {
+  position: absolute;
+  bottom: 10px;
+  width: 100px;
+}
+
+colorwindow #cp_cancel, .color-picker #cp_cancel {
+  /*left: 90px;*/
+  left: calc((100% / 2) + 25px);
+  background-image: -ms-linear-gradient(top, #82888b, #565b5f);
+  background-image: -o-linear-gradient(top, #82888b, #565b5f);
+  background-image: -moz-linear-gradient(top, #82888b, #565b5f);
+  background-image: -webkit-linear-gradient(top, #00b300, #226629);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#82888b), to(#565b5f));
+  background-image: linear-gradient(#82888b, #565b5f);
+}
+
+colorwindow #cp_cancel:hover, .color-picker #cp_cancel:hover {
+  background-image: -ms-linear-gradient(top, #565b5f, #82888b);
+  background-image: -o-linear-gradient(top, #565b5f, #82888b);
+  background-image: -moz-linear-gradient(top, #565b5f, #82888b);
+  background-image: -webkit-linear-gradient(top, #565b5f, #82888b);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#565b5f), to(#82888b));
+  background-image: linear-gradient(#565b5f, #82888b);
+}
+
+colorwindow #cp_accept, .color-picker #cp_accept {
+  /*left: 10px;*/
+  right: calc((100% / 2) + 25px);
+  background-image: -ms-linear-gradient(top, #00b300, #226629);
+  background-image: -o-linear-gradient(top, #00b300, #226629);
+  background-image: -moz-linear-gradient(top, #00b300, #226629);
+  background-image: -webkit-linear-gradient(top, #00b300, #226629);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00b300), to(#226629));
+  background-image: linear-gradient(#00b300, #226629);
+}
+
+colorwindow #cp_accept:hover, .color-picker #cp_accept:hover {
+  background-image: -ms-linear-gradient(top, #226629, #00b300);
+  background-image: -o-linear-gradient(top, #226629, #00b300);
+  background-image: -moz-linear-gradient(top, #226629, #00b300);
+  background-image: -webkit-linear-gradient(top, #226629, #00b300);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#226629), to(#00b300));
+  background-image: linear-gradient(#226629, #00b300);
+}
+
+colorwindow #cp_none, .color-picker #cp_none {
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: -ms-linear-gradient(top, #82888b, #565b5f);
+  background-image: -o-linear-gradient(top, #82888b, #565b5f);
+  background-image: -moz-linear-gradient(top, #82888b, #565b5f);
+  background-image: -webkit-linear-gradient(top, #00b300, #226629);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#82888b), to(#565b5f));
+  background-image: linear-gradient(#82888b, #565b5f);
+}
+
+colorwindow #cp_none:hover, .color-picker #cp_none:hover {
+  background-image: -ms-linear-gradient(top, #565b5f, #82888b);
+  background-image: -o-linear-gradient(top, #565b5f, #82888b);
+  background-image: -moz-linear-gradient(top, #565b5f, #82888b);
+  background-image: -webkit-linear-gradient(top, #565b5f, #82888b);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#565b5f), to(#82888b));
+  background-image: linear-gradient(#565b5f, #82888b);
+}
+
+colorwindow[type=colorinput] #cp_accept, .color-picker[type=colorinput] #cp_accept {
+  left: 20%;
+  transform: translateX(-50%);
+}
+
+colorwindow[type=colorinput] #cp_cancel, .color-picker[type=colorinput] #cp_cancel {
+  left: 80%;
+  transform: translateX(-50%);
+}
+
+colorwindow:not([type=colorinput]) #cp_none, .color-picker:not([type=colorinput]) #cp_none {
+  display: none;
+}
+
+colorwindow .color-wall-cursor, .color-picker .color-wall-cursor {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-image: url(../../../assets/img/color_picker/ColorCursor2.svg);
+  background-size: cover;
+}
+
+colorwindow .tabs, .color-picker .tabs {
+  position: absolute;
+  height: calc(100% - (var(--colorwindow-border-radius) * 2));
+  width: 40px;
+  left: -40px;
+  top: var(--colorwindow-border-radius);
+}
+
+colorwindow .tab, .color-picker .tab {
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  text-align: center;
+  display: block;
+  border: 1px solid #6a767b;
+  position: relative;
+  left: 0px;
+  transition: 0.5s color ease-in, 0.5s width ease-in, 0.5s left ease-in;
+}
+
+colorwindow .tab:hover, .color-picker .tab:hover {
+  background-color: gray;
+}
+
+[theme=black] colorwindow .tab, .color-picker .tab {
+  /*background-image: linear-gradient(#25292c, #0e0f12);*/
+  background-image: -ms-linear-gradient(top, #2d353d, #0d1012);
+  background-image: -o-linear-gradient(top, #2d353d, #0d1012);
+  background-image: -moz-linear-gradient(top, #2d353d, #0d1012);
+  background-image: -webkit-linear-gradient(top, #2d353d, #0d1012);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2d353d), to(#0d1012));
+  background-image: linear-gradient(#2d353d, #0d1012);
+  color: #dddddd;
+  transition: 0.5s color ease-in, 0.25s width ease-in, 0.25s left ease-in;
+  left: 0px;
+  width: 40px;
+}
+
+[theme=black] colorwindow .tab:hover, .color-picker .tab:hover {
+  color: #f5c20b;
+  transition: 0.5s color ease-in, 0.25s width ease-in, 0.25s left ease-in;
+  left: -6px;
+  width: 45px;
+}
+
+[theme=black] colorwindow .tab.active, .color-picker .tab.active {
+  color: #00b300;
+  transition: 0.5s color ease-in, 0.25s width ease-in, 0.25s left ease-in;
+  width: 50px;
+  left: -11px;
+}
+
+[theme=black] colorwindow .tab:not(.active) > div.t-overlay, .color-picker .tab:not(.active) > div.t-overlay {
+  opacity: 0;
+  transition: 0.5s opacity ease-out;
+}
+
+[theme=black] colorwindow .tab.active > div.t-overlay, .color-picker .tab.active > div.t-overlay, [theme=black] colorwindow .tab:hover > div.t-overlay, .color-picker .tab:hover > div.t-overlay {
+  /*background-image: linear-gradient(#0e0f12, #25292c);*/
+  background-image: -ms-linear-gradient(top, #0d1012, #2d353d);
+  background-image: -o-linear-gradient(top, #0d1012, #2d353d);
+  background-image: -moz-linear-gradient(top, #0d1012, #2d353d);
+  background-image: -webkit-linear-gradient(top, #0d1012, #2d353d);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0d1012), to(#2d353d));
+  background-image: linear-gradient(#0d1012, #2d353d);
+  opacity: 100;
+  transition: 0.5s opacity ease-in;
+}
+
+colorwindow .tab i, .color-picker .tab i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#cp_eyedropper {
+  font-size: 25px;
+  position: absolute;
+  z-index: 9999999999999;
+}
+
+#cp_eyedropper:not(.show), colorwindow:not([eyedropper]) #cp_eyedropper, .color-picker:not([eyedropper]) #cp_eyedropper {
+  display: none;
+}
+
+colorwindow .hsv-rgb_selector, .color-picker .hsv-rgb_selector {
+  width: 140px;
+  position: absolute;
+  top: 230px;
+  left: 175px;
+  height: 40px;
+  display: inline-flex;
+}
+
+colorwindow .hsv-rgb_selector > div, .color-picker .hsv-rgb_selector > div, colorwindow .hsv-rgb_selector > div .overlay, .color-picker .hsv-rgb_selector > div .overlay {
+  height: inherit;
+  width: 50%;
+  display: inline-block;
+  position: relative;
+  background-color: white;
+  border: 1px solid gray;
+}
+
+[theme=dark] colorwindow .hsv-rgb_selector > div, [theme=dark] .color-picker .hsv-rgb_selector > div, [theme=dark] colorwindow .hsv-rgb_selector > div .overlay, [theme=dark] .color-picker .hsv-rgb_selector > div .overlay {
+  background-image: -ms-linear-gradient(top, #82888b,#565b5f);
+  background-image: -o-linear-gradient(top, #82888b,#565b5f);
+  background-image: -moz-linear-gradient(top, #82888b,#565b5f);
+  background-image: -webkit-linear-gradient(top, #82888b,#565b5f);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#82888b), to(#565b5f));
+  background-image: linear-gradient(#82888b,#565b5f);
+  --hsl-rgb-border: 3px groove rgba(0,0,0,0.13);
+  --hsl-rgb-topradius: 20px;
+  --hsl-rgb-bottomradius: 3px;
+  border-top: var(--hsl-rgb-border);
+  border-bottom: var(--hsl-rgb-border);
+}
+
+colorwindow .hsv-rgb_selector > div:hover, .color-picker .hsv-rgb_selector > div:hover {
+  background-color: gray;
+}
+
+colorwindow .hsv-rgb_selector > div.active, .color-picker .hsv-rgb_selector > div.active, colorwindow .hsv-rgb_selector > div:hover, .color-picker .hsv-rgb_selector > div:hover {
+  background-color: gray;
+}
+
+[theme=dark] colorwindow .hsv-rgb_selector > div:hover, [theme=dark] .color-picker .hsv-rgb_selector > div:hover {
+  background-image: linear-gradient(#565b5f, #82888b);
+}
+
+[theme=dark] colorwindow .hsv-rgb_selector > div.active, [theme=dark] .color-picker .hsv-rgb_selector > div.active {
+  background-image: linear-gradient(#565b5f, #82888b);
+  border-color: green;
+}
+
+colorwindow .hsv-rgb_selector > div:first-child, .color-picker .hsv-rgb_selector > div:first-child {
+  border-left: var(--hsl-rgb-border);
+  border-top-left-radius: var(--hsl-rgb-topradius);
+  border-bottom-left-radius: var(--hsl-rgb-bottomradius);
+  border-right: 3px groove rgba(0,0,0,0.13);
+}
+
+colorwindow .hsv-rgb_selector > div:last-child, .color-picker .hsv-rgb_selector > div:last-child {
+  border-right: var(--hsl-rgb-border);
+  border-top-right-radius: var(--hsl-rgb-topradius);
+  border-bottom-right-radius: var(--hsl-rgb-bottomradius);
+}
+
+colorwindow .hsv-rgb_selector > div label, .color-picker .hsv-rgb_selector > div label {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(50,50,50);
+  font-family: 'Changa';
+  font-size: 20px;
+}
+
+colorwindow #cp_a_redhue, colorwindow #cp_a_greensaturation, colorwindow #cp_a_bluebrightness, colorwindow #cp_a_transparency, .color-picker #cp_a_redhue, .color-picker #cp_a_greensaturation, .color-picker #cp_a_bluebrightness, .color-picker #cp_a_transparency {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+colorwindow #cp_a_redhue, .color-picker #cp_a_redhue {
+  top: 20px;
+}
+
+colorwindow #cp_a_greensaturation, .color-picker #cp_a_greensaturation {
+  top: 70px;
+}
+
+colorwindow #cp_a_bluebrightness, .color-picker #cp_a_bluebrightness {
+  top: 120px;
+}
+
+colorwindow #cp_a_transparency, .color-picker #cp_a_transparency {
+  top: 170px;
+}
+
+colorwindow .cp_a_label, .color-picker .cp_a_label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+colorwindow .cp_a_label.redhue, .color-picker .cp_a_label.redhue {
+  top: calc(20px - 14px);
+}
+
+colorwindow .cp_a_label.greensaturation, .color-picker .cp_a_label.greensaturation {
+  top: calc(70px - 14px);
+}
+
+colorwindow .cp_a_label.bluebrightness, .color-picker .cp_a_label.bluebrightness {
+  top: calc(120px - 14px);
+}
+
+colorwindow .cp_a_label.transparency, .color-picker .cp_a_label.transparency {
+  top: calc(170px - 14px);
+}
+
+.color-picker #cp_a_walltoggle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0px;
+  background-color: gray;
+}
+
+.color-picker #cp_a_walltoggle i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.color-picker #cp_a_walltoggle:not(.hidden) i.fa.fa-plus {
+  display: none;
+}
+
+.color-picker #cp_a_walltoggle.hidden i.fa.fa-minus {
+  display: none;
+}
+
+[theme=dark] .color-picker #cp_a_walltoggle {
+  border-top-right-radius: var(--colorwindow-border-radius);
+  border-bottom-left-radius: var(--colorwindow-border-radius);
+  /*background-color: #2a394a;*/
+  background-image: linear-gradient(#2a394a, #1e2833);
+  box-shadow: 0 0 0 1px #5b5b5b;
+  color: #dddddd;
+}
+
+[theme=dark] .color-picker #cp_a_walltoggle:hover {
+  color: #00b300;
+  transition: 0.5s opacity ease-in;
+}
+
+[theme=dark] .color-picker #cp_a_walltoggle .t-overlay {
+  background-image: linear-gradient(#1e2833, #2a394a);
+  opacity: 0;
+  transition: 0.5s opacity ease-in;
+}
+
+[theme=dark] .color-picker #cp_a_walltoggle:hover .t-overlay {
+  opacity: 100;
+  transition: 0.5s opacity ease-in;
+}
+
+[menu] [cp-sub-menu]:not(.show) {
+  display: none;
+}
+
+canvas.eyedropper-canvas {
+  position: absolute;
+}
+
+canvas.eyedropper-canvas:not(.show) {
+  display: none;
+}
+
+colorwindow [palette], .color-picker [palette] {
+  height: 200px;
+  /*padding: 20px;*/
+  width: calc(100% - 40px);
+  position: absolute;
+  transform: translate(20px, 20px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+colorwindow #cp_palette, .color-picker #cp_palette {
+  position: absolute;
+  top: 237px;
+  right: 84px;
+}
+
+colorwindow #cp_favourites, .color-picker #cp_favourites {
+  position: absolute;
+  top: 237px;
+  left: 120px;
+  height: 28px;
+  font-size: 15px;
+}
+
+colorwindow #cp_deleteFav, .color-picker #cp_deleteFav {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 241px;
+  left: calc(120px - 24px);
+  background-color: gray;
+  border-radius: 5px;
+  color: rgb(50,50,50);
+}
+
+colorwindow #cp_deleteFav:not(.show), .color-picker #cp_deleteFav:not(.show) {
+  display: none;
+}
+
+[theme=dark] colorwindow #cp_deleteFav, [theme=dark] .color-picker #cp_deleteFav {
+  background-color: rgb(54,57,61);
+  color: #c22222;
+}
+
+[theme=dark] colorwindow #cp_deleteFav:hover, [theme=dark] .color-picker #cp_deleteFav:hover {
+  /*box-shadow: 0 0 0 1px white;*/
+  background-color: #c22222;
+  color: rgb(54,57,61);
+}
+
+colorwindow #cp_deleteFav i, .color-picker #cp_deleteFav i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+colorwindow [palette]:not(.active), .color-picker [palette]:not(.active) {
+  display: none;
+}
+
+colorwindow [palette] color, .color-picker [palette] color, colorwindow [palette] [color], .color-picker [palette] [color] {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  /*box-shadow: 0 0 0 1px #dddddd;*/
+  display: inline-flex;
+  margin: 3px;
+  background-blend-mode: overlay;
+}
+
+#cp_previewpalette {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #dddddd;
+  display: inline-flex;
+  margin: 3px;
+  z-index: 100000;
+}
+
+#cp_previewpalette.transition {
+  width: 40px;
+  height: 40px;
+  transition: width 0.25s ease-in, height 0.25s ease-in;
+}
+
+#cp_favImport, #cp_favExport {
+  position: absolute;
+  top: 223px;
+  font-size: 8pt;
+  /*width: 50px;*/
+  background-color: #5b5b5b;
+}
+
+[theme=dark] #cp_favImport, [theme=dark] #cp_favExport {
+  background-color: #2a394a;
+}
+
+[theme=dark] #cp_favImport:hover, [theme=dark] #cp_favExport:hover {
+  background-color: #263e58;
+}
+
+#cp_favImport, #cp_favImport {
+  left: 243px;
+  justify-content: right;
+  align-content: end;
+}
+
+#cp_favExport, #cp_favExport {
+  left: 300px;
+}
+
+#cp_favModal {
+  position: absolute;
+  width: 250px;
+  height: 40px;
+  background-color: rgb(230,230,230);
+  border-radius: 10px;
+  /*top: 30%;*/
+  /*left: 25%;*/
+  z-index: 999999;
+}
+
+#cp_favModal[usedatabase] {
+  width: 280px;
+}
+
+#cp_favModal:not(.show) {
+  display: none;
+}
+
+[theme=dark] #cp_favModal {
+  background-color: #1e2833;
+  box-shadow: 0 0 0 1px #4d4d4d;
+}
+
+#cp_favModal > input {
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  transform: translateY(-50%);
+}
+
+#cp_favModal[usedatabase] > input {
+  left: 37px;
+}
+
+#cp_favModal:not([usedatabase]) #cp_favModalDB {
+  display: none;
+}
+
+#cp_favModal[usedatabase] #cp_favModalDB {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  color: gray;
+  font-size: 20px;
+}
+
+#cp_favModal[usedatabase] #cp_favModalDB.active {
+  color: green;
+}
+
+#cp_favModal button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  width: 40px;
+  box-shadow: 0 0 0 1px #4d4d4d;
+}
+
+#cp_newFavOk {
+  right: 40px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  /*border-top-left-radius: inherit;*/
+  /*border-bottom-left-radius: inherit;*/
+}
+
+[theme=dark] #cp_newFavOk {
+  background-color: #2a394a;
+  background-image: linear-gradient(#2a394a, #1e2b3a);
+}
+
+[theme=dark] #cp_newFavOk:hover {
+  background-color: #1e2b3a;
+  background-image: linear-gradient(#1e2b3a, #2a394a);
+}
+
+#cp_newFavCancel {
+  right: 0px;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+[theme=dark] #cp_newFavCancel {
+  background-color: #41474c;
+  background-image: linear-gradient(#41474c, #2e3236);
+}
+
+[theme=dark] #cp_newFavCancel:hover {
+  background-color: #2e3236;
+  background-image: linear-gradient(#2e3236, #41474c);
+}
+

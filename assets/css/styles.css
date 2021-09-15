@@ -1,0 +1,32 @@
+.grid {
+  max-width: 1660px;
+  margin: auto;
+  display: table;
+}
+
+.container.grid {
+  max-width: 1660px;
+  width: 100%;
+}
+
+@media (min-width:1800px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #dddddd;
+  text-align: left;
+  background-color: #16181b;
+}
+
+body.hide-cursor {
+  cursor: none;
+}
+

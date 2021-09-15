@@ -1,0 +1,34 @@
+colorwindow ::-webkit-scrollbar {
+  width: 10px;
+}
+
+colorwindow ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+colorwindow ::-webkit-scrollbar-track-piece {
+  /*border-radius: 5px;*/
+}
+
+colorwindow ::-webkit-scrollbar-button {
+  display: none;
+}
+
+colorwindow ::-webkit-scrollbar-button:single-button {
+  display: none;
+}
+
+colorwindow ::-webkit-scrollbar-button:double-button {
+  display: none;
+}
+
+colorwindow ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+colorwindow ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+

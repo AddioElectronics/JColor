@@ -1,0 +1,51 @@
+color, .input-color {
+  position: relative;
+  display: inline-flex;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-image: url(../../../assets/img/TransparencyGrid.png);
+  background-size: calc(100% / 2);
+  width: 30px;
+  height: 30px;
+}
+
+colorwindow color {
+  background-size: calc(100% / 1);
+}
+
+[theme=dark] color, [theme=dark] .input-color {
+  border-color: #888888;
+  transition: 0.25s box-shadow, 0.25s border-color;
+}
+
+[theme=dark] color:hover, [theme=dark] .input-color:hover {
+  border-color: white;
+  box-shadow: 0 0 10px 3px #00b300;
+  transition: 0.25s box-shadow, 0.25s border-color;
+}
+
+colorinput .preview, .input-color .preview {
+  width: 30px;
+  height: 30px;
+  border-radius: inherit;
+}
+
+colorinput .preview .none:after, .input-color .preview.none:after {
+  content: "✕";
+  font-size: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+}
+
+[theme=dark] colorinput .preview.none:after, [theme=dark] .input-color .preview.none:after {
+  color: #888888;
+}
+
+.t-bg {
+  background-image: url(../../../assets/img/TransparencyGrid.png);
+  background-size: 20px;
+}
+

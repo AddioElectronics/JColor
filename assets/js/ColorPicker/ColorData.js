@@ -1,0 +1,762 @@
+
+var Colors = {
+    basic : [
+    "#000000",
+    "#111111",
+    "#252525",
+    "#363636",
+    "#464646",
+    "#555555",
+    "#636363",
+    "#707070",
+    "#7d7d7d",
+    "#898989",
+    "#959595",
+    "#a1a1a1",
+    "#acacac",
+    "#b7b7b7",
+    "#c2c2c2",
+    "#cccccc",
+    "#d7d7d7",
+    "#e1e1e1",
+    "#ebebeb",
+    "#ffffff",
+    "red",
+    "yellow",
+    "rgb(0,255,0)",
+    "cyan",
+    "blue",
+    "#ff00ff",
+    "purple",
+    "pink",
+    "green",
+    "#f58231",
+    "orange"
+            ],
+    
+    w3 : [
+    "#f44336",
+    "#e91e63",
+    "#9c27b0",
+    "#673ab7",
+    "#3f51b5",
+    "#2196F3",
+    "#87CEEB",
+    "#00bcd4",
+    "#00ffff",
+    "#009688",
+    "#4CAF50",
+    "#8bc34a",
+    "#cddc39",
+    "#fdf5e6",
+    "#f0e68c",
+    "#ffeb3b",
+    "#ffc107",
+    "#ff9800",
+    "#ff5722",
+    "#607d8b",
+    "#795548",
+    "#f1f1f1",
+    "#9e9e9e",
+    "#616161",
+    "#000",
+    "#ffdddd",
+    "#ffffcc",
+    "#ddffdd",
+    "#ddffff"
+            ],
+    
+    extended : [
+    "#CD5C5C",
+    "#F08080",
+    "#FA8072",
+    "#E9967A",
+    "#FFA07A",
+    "#DC143C",
+    "#FF0000",
+    "#B22222",
+    "#8B0000",
+    
+    "#FFC0CB",
+    "#FFB6C1",
+    "#FF69B4",
+    "#FF1493",
+    "#C71585",
+    "#DB7093",
+    
+    "#FFA07A",
+    "#FF7F50",
+    "#FF6347",
+    "#FF4500",
+    "#FF8C00",
+    "#FFA500",
+    
+    "#FFD700",
+    "#FFFF00",
+    "#FFFFE0",
+    "#FFFACD",
+    "#FAFAD2",
+    "#FFEFD5",
+    "#FFE4B5",
+    "#FFDAB9",
+    "#EEE8AA",
+    "#F0E68C",
+    "#BDB76B",
+    
+    "#E6E6FA",
+    "#D8BFD8",
+    "#DDA0DD",
+    "#EE82EE",
+    "#DA70D6",
+    "#FF00FF",
+    "#BA55D3",
+    "#9370DB",
+    "#8A2BE2",
+    "#9400D3",
+    "#9932CC",
+    "#8B008B",
+    "#800080",
+    "#4B0082",
+    "#6A5ACD",
+    "#483D8B",
+    "#7B68EE",
+    
+    "#ADFF2F",
+    "#7FFF00",
+    "#7CFC00",
+    "#00FF00",
+    "#32CD32",
+    "#98FB98",
+    "#90EE90",
+    "#00FA9A",
+    "#00FF7F",
+    "#3CB371",
+    
+    "#2E8B57",
+    "#228B22",
+    "#008000",
+    "#006400",
+    "#9ACD32",
+    "#6B8E23",
+    "#808000",
+    "#556B2F",
+    "#66CDAA",
+    "#8FBC8F",
+    "#20B2AA",
+    "#008B8B",
+    "#008080",
+    
+    "#00FFFF",
+    "#E0FFFF",
+    "#AFEEEE",
+    "#7FFFD4",
+    "#40E0D0",
+    "#48D1CC",
+    "#00CED1",
+    
+    "#5F9EA0",
+    "#4682B4",
+    "#B0C4DE",
+    "#B0E0E6",
+    "#ADD8E6",
+    "#87CEEB",
+    "#87CEFA",
+    
+    
+    "#00BFFF",
+    "#1E90FF",
+    "#6495ED",
+    "#7B68EE",
+    "#4169E1",
+    "#0000FF",
+    "#0000CD",
+    "#00008B",
+    "#000080",
+    "#191970",
+    
+    "#FFF8DC",
+    "#FFEBCD",
+    "#FFE4C4",
+    "#FFDEAD",
+    "#F5DEB3",
+    "#DEB887",
+    "#D2B48C",
+    "#BC8F8F",
+    "#F4A460",
+    "#DAA520",
+    "#B8860B",
+    "#CD853F",
+    "#D2691E",
+    "#8B4513",
+    "#A0522D",
+    "#A52A2A",
+    "#800000",
+    
+    "#FFFFFF",
+    "#FFFAFA",
+    "#F0FFF0",
+    "#F5FFFA",
+    "#F0FFFF",
+    "#F0F8FF",
+    "#F8F8FF",
+    "#F5F5F5",
+    "#FFF5EE",
+    "#F5F5DC",
+    "#FDF5E6",
+    "#FFFAF0",
+    "#FFFFF0",
+    "#FAEBD7",
+    "#FAF0E6",
+    "#FFF0F5",
+    "#FFE4E1",
+    
+    "#DCDCDC",
+    "#D3D3D3",
+    "#C0C0C0",
+    "#A9A9A9",
+    "#808080",
+    "#696969",
+    "#778899",
+    "#708090",
+    "#2F4F4F",
+    "#000000"
+            ],
+        
+    simple : [
+    "#e6194b",
+    "#3cb44b",
+    "#ffe119",
+    "#0082c8",
+    "#f58231",
+    "#911eb4",
+    "#46f0f0",
+    "#f032e6",
+    "#d2f53c",
+    "#fabebe",
+    "#008080",
+    "#e6beff",
+    "#aa6e28",
+    "#fffac8",
+    "#800000",
+    "#aaffc3",
+    "#808000",
+    "#ffd8b1",
+    "#000080",
+    "#808080",
+    "#FFFFFF",
+    "#000000"
+            ]   
+};
+
+var named_colors = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
+        "beige":"#f5f5dc","bisque":"#ffe4c4","black":"#000000","blanchedalmond":"#ffebcd","blue":"#0000ff","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887",
+        "cadetblue":"#5f9ea0","chartreuse":"#7fff00","chocolate":"#d2691e","coral":"#ff7f50","cornflowerblue":"#6495ed","cornsilk":"#fff8dc","crimson":"#dc143c","cyan":"#00ffff",
+        "darkblue":"#00008b","darkcyan":"#008b8b","darkgoldenrod":"#b8860b","darkgray":"#a9a9a9","darkgreen":"#006400","darkkhaki":"#bdb76b","darkmagenta":"#8b008b","darkolivegreen":"#556b2f",
+        "darkorange":"#ff8c00","darkorchid":"#9932cc","darkred":"#8b0000","darksalmon":"#e9967a","darkseagreen":"#8fbc8f","darkslateblue":"#483d8b","darkslategray":"#2f4f4f","darkturquoise":"#00ced1",
+        "darkviolet":"#9400d3","deeppink":"#ff1493","deepskyblue":"#00bfff","dimgray":"#696969","dodgerblue":"#1e90ff",
+        "firebrick":"#b22222","floralwhite":"#fffaf0","forestgreen":"#228b22","fuchsia":"#ff00ff",
+        "gainsboro":"#dcdcdc","ghostwhite":"#f8f8ff","gold":"#ffd700","goldenrod":"#daa520","gray":"#808080","green":"#008000","greenyellow":"#adff2f",
+        "honeydew":"#f0fff0","hotpink":"#ff69b4",
+        "indianred ":"#cd5c5c","indigo":"#4b0082","ivory":"#fffff0","khaki":"#f0e68c",
+        "lavender":"#e6e6fa","lavenderblush":"#fff0f5","lawngreen":"#7cfc00","lemonchiffon":"#fffacd","lightblue":"#add8e6","lightcoral":"#f08080","lightcyan":"#e0ffff","lightgoldenrodyellow":"#fafad2",
+        "lightgrey":"#d3d3d3","lightgreen":"#90ee90","lightpink":"#ffb6c1","lightsalmon":"#ffa07a","lightseagreen":"#20b2aa","lightskyblue":"#87cefa","lightslategray":"#778899","lightsteelblue":"#b0c4de",
+        "lightyellow":"#ffffe0","lime":"#00ff00","limegreen":"#32cd32","linen":"#faf0e6",
+        "magenta":"#ff00ff","maroon":"#800000","mediumaquamarine":"#66cdaa","mediumblue":"#0000cd","mediumorchid":"#ba55d3","mediumpurple":"#9370d8","mediumseagreen":"#3cb371","mediumslateblue":"#7b68ee",
+        "mediumspringgreen":"#00fa9a","mediumturquoise":"#48d1cc","mediumvioletred":"#c71585","midnightblue":"#191970","mintcream":"#f5fffa","mistyrose":"#ffe4e1","moccasin":"#ffe4b5",
+        "navajowhite":"#ffdead","navy":"#000080",
+        "oldlace":"#fdf5e6","olive":"#808000","olivedrab":"#6b8e23","orange":"#ffa500","orangered":"#ff4500","orchid":"#da70d6",
+        "palegoldenrod":"#eee8aa","palegreen":"#98fb98","paleturquoise":"#afeeee","palevioletred":"#d87093","papayawhip":"#ffefd5","peachpuff":"#ffdab9","peru":"#cd853f","pink":"#ffc0cb","plum":"#dda0dd","powderblue":"#b0e0e6","purple":"#800080",
+        "rebeccapurple":"#663399","red":"#ff0000","rosybrown":"#bc8f8f","royalblue":"#4169e1",
+        "saddlebrown":"#8b4513","salmon":"#fa8072","sandybrown":"#f4a460","seagreen":"#2e8b57","seashell":"#fff5ee","sienna":"#a0522d","silver":"#c0c0c0","skyblue":"#87ceeb","slateblue":"#6a5acd","slategray":"#708090","snow":"#fffafa","springgreen":"#00ff7f","steelblue":"#4682b4",
+        "tan":"#d2b48c","teal":"#008080","thistle":"#d8bfd8","tomato":"#ff6347","turquoise":"#40e0d0",
+        "violet":"#ee82ee",
+        "wheat":"#f5deb3","white":"#ffffff","whitesmoke":"#f5f5f5",
+        "yellow":"#ffff00","yellowgreen":"#9acd32"};
+
+
+/*
+"#000000"
+"#111111"
+"#252525"
+"#363636"
+"#464646"
+"#555555"
+"#636363"
+"#707070"
+"#7d7d7d"
+"#898989"
+"#959595"
+"#a1a1a1"
+"#acacac"
+"#b7b7b7"
+"#c2c2c2"
+"#cccccc"
+"#d7d7d7"
+"#e1e1e1"
+"#ebebeb"
+"#ffffff"
+"red"
+"yellow"
+"rgb(0,255,0)"
+"cyan"
+"blue"
+"#ff00ff"
+"purple"
+"pink"
+"green"
+"#f58231"
+"orange"
+ 
+ 
+"#f44336"
+"#e91e63"
+"#9c27b0"
+"#673ab7"
+"#3f51b5"
+"#2196F3"
+"#87CEEB"
+"#00bcd4"
+"#00ffff"
+"#009688"
+"#4CAF50"
+"#8bc34a"
+"#cddc39"
+"#fdf5e6"
+"#f0e68c"
+"#ffeb3b"
+"#ffc107"
+"#ff9800"
+"#ff5722"
+"#607d8b"
+"#795548"
+"#f1f1f1"
+"#9e9e9e"
+"#616161"
+"#000"
+"#ffdddd"
+"#ffffcc"
+"#ddffdd"
+"#ddffff"
+ 
+"#CD5C5C"
+"#F08080"
+"#FA8072"
+"#E9967A"
+"#FFA07A"
+"#DC143C"
+"#FF0000"
+"#B22222"
+"#8B0000"
+ 
+"#FFC0CB"
+"#FFB6C1"
+"#FF69B4"
+"#FF1493"
+"#C71585"
+"#DB7093"
+ 
+"#FFA07A"
+"#FF7F50"
+"#FF6347"
+"#FF4500"
+"#FF8C00"
+"#FFA500"
+ 
+"#FFD700"
+"#FFFF00"
+"#FFFFE0"
+"#FFFACD"
+"#FAFAD2"
+"#FFEFD5"
+"#FFE4B5"
+"#FFDAB9"
+"#EEE8AA"
+"#F0E68C"
+"#BDB76B"
+ 
+"#E6E6FA"
+"#D8BFD8"
+"#DDA0DD"
+"#EE82EE"
+"#DA70D6"
+"#FF00FF"
+"#BA55D3"
+"#9370DB"
+"#8A2BE2"
+"#9400D3"
+"#9932CC"
+"#8B008B"
+"#800080"
+"#4B0082"
+"#6A5ACD"
+"#483D8B"
+"#7B68EE"
+ 
+"#ADFF2F"
+"#7FFF00"
+"#7CFC00"
+"#00FF00"
+"#32CD32"
+"#98FB98"
+"#90EE90"
+"#00FA9A"
+"#00FF7F"
+"#3CB371"
+ 
+"#2E8B57"
+"#228B22"
+"#008000"
+"#006400"
+"#9ACD32"
+"#6B8E23"
+"#808000"
+"#556B2F"
+"#66CDAA"
+"#8FBC8F"
+"#20B2AA"
+"#008B8B"
+"#008080"
+ 
+"#00FFFF"
+"#E0FFFF"
+"#AFEEEE"
+"#7FFFD4"
+"#40E0D0"
+"#48D1CC"
+"#00CED1"
+ 
+"#5F9EA0"
+"#4682B4"
+"#B0C4DE"
+"#B0E0E6"
+"#ADD8E6"
+"#87CEEB"
+"#87CEFA"
+ 
+ 
+"#00BFFF"
+"#1E90FF"
+"#6495ED"
+"#7B68EE"
+"#4169E1"
+"#0000FF"
+"#0000CD"
+"#00008B"
+"#000080"
+"#191970"
+ 
+"#FFF8DC"
+"#FFEBCD"
+"#FFE4C4"
+"#FFDEAD"
+"#F5DEB3"
+"#DEB887"
+"#D2B48C"
+"#BC8F8F"
+"#F4A460"
+"#DAA520"
+"#B8860B"
+"#CD853F"
+"#D2691E"
+"#8B4513"
+"#A0522D"
+"#A52A2A"
+"#800000"
+ 
+"#FFFFFF"
+"#FFFAFA"
+"#F0FFF0"
+"#F5FFFA"
+"#F0FFFF"
+"#F0F8FF"
+"#F8F8FF"
+"#F5F5F5"
+"#FFF5EE"
+"#F5F5DC"
+"#FDF5E6"
+"#FFFAF0"
+"#FFFFF0"
+"#FAEBD7"
+"#FAF0E6"
+"#FFF0F5"
+"#FFE4E1"
+ 
+"#DCDCDC"
+"#D3D3D3"
+"#C0C0C0"
+"#A9A9A9"
+"#808080"
+"#696969"
+"#778899"
+"#708090"
+"#2F4F4F"
+"#000000"
+ 
+"#e6194b"
+"#3cb44b"
+"#ffe119"
+"#0082c8"
+"#f58231"
+"#911eb4"
+"#46f0f0"
+"#f032e6"
+"#d2f53c"
+"#fabebe"
+"#008080"
+"#e6beff"
+"#aa6e28"
+"#fffac8"
+"#800000"
+"#aaffc3"
+"#808000"
+"#ffd8b1"
+"#000080"
+"#808080"
+"#FFFFFF"
+"#000000"
+*/
+
+
+/*
+Colors.basic.push("#000000"); //Black
+Colors.basic.push("#111111");
+Colors.basic.push("#252525");
+Colors.basic.push("#363636");
+Colors.basic.push("#464646");
+Colors.basic.push("#555555");
+Colors.basic.push("#636363");
+Colors.basic.push("#707070");
+Colors.basic.push("#7d7d7d");
+Colors.basic.push("#898989");
+Colors.basic.push("#959595");
+Colors.basic.push("#a1a1a1");
+Colors.basic.push("#acacac");
+Colors.basic.push("#b7b7b7");
+Colors.basic.push("#c2c2c2");
+Colors.basic.push("#cccccc");
+Colors.basic.push("#d7d7d7");
+Colors.basic.push("#e1e1e1");
+Colors.basic.push("#ebebeb");
+Colors.basic.push("#ffffff"); //White
+Colors.basic.push("red");
+Colors.basic.push("yellow");
+Colors.basic.push("rgb(0,255,0)");
+Colors.basic.push("cyan");
+Colors.basic.push("blue");
+Colors.basic.push("#ff00ff");
+Colors.basic.push("purple");
+Colors.basic.push("pink");
+Colors.basic.push("green");
+Colors.basic.push("#f58231");
+Colors.basic.push("orange");
+
+
+Colors.w3.push("#f44336");
+Colors.w3.push("#e91e63");
+Colors.w3.push("#9c27b0");
+Colors.w3.push("#673ab7");
+Colors.w3.push("#3f51b5");
+Colors.w3.push("#2196F3");
+Colors.w3.push("#87CEEB");
+Colors.w3.push("#00bcd4");
+Colors.w3.push("#00ffff");
+Colors.w3.push("#009688");
+Colors.w3.push("#4CAF50");
+Colors.w3.push("#8bc34a");
+Colors.w3.push("#cddc39");
+Colors.w3.push("#fdf5e6");
+Colors.w3.push("#f0e68c");
+Colors.w3.push("#ffeb3b");
+Colors.w3.push("#ffc107");
+Colors.w3.push("#ff9800");
+Colors.w3.push("#ff5722");
+Colors.w3.push("#607d8b");
+Colors.w3.push("#795548");
+Colors.w3.push("#f1f1f1");
+Colors.w3.push("#9e9e9e");
+Colors.w3.push("#616161");
+Colors.w3.push("#000");
+Colors.w3.push("#ffdddd");
+Colors.w3.push("#ffffcc");
+Colors.w3.push("#ddffdd");
+Colors.w3.push("#ddffff");
+
+Colors.extended.push("#CD5C5C");
+Colors.extended.push("#F08080");
+Colors.extended.push("#FA8072");
+Colors.extended.push("#E9967A");
+Colors.extended.push("#FFA07A");
+Colors.extended.push("#DC143C");
+Colors.extended.push("#FF0000");
+Colors.extended.push("#B22222");
+Colors.extended.push("#8B0000");
+
+Colors.extended.push("#FFC0CB");
+Colors.extended.push("#FFB6C1");
+Colors.extended.push("#FF69B4");
+Colors.extended.push("#FF1493");
+Colors.extended.push("#C71585");
+Colors.extended.push("#DB7093");
+
+Colors.extended.push("#FFA07A");
+Colors.extended.push("#FF7F50");
+Colors.extended.push("#FF6347");
+Colors.extended.push("#FF4500");
+Colors.extended.push("#FF8C00");
+Colors.extended.push("#FFA500");
+
+Colors.extended.push("#FFD700");
+Colors.extended.push("#FFFF00");
+Colors.extended.push("#FFFFE0");
+Colors.extended.push("#FFFACD");
+Colors.extended.push("#FAFAD2");
+Colors.extended.push("#FFEFD5");
+Colors.extended.push("#FFE4B5");
+Colors.extended.push("#FFDAB9");
+Colors.extended.push("#EEE8AA");
+Colors.extended.push("#F0E68C");
+Colors.extended.push("#BDB76B");
+
+Colors.extended.push("#E6E6FA");
+Colors.extended.push("#D8BFD8");
+Colors.extended.push("#DDA0DD");
+Colors.extended.push("#EE82EE");
+Colors.extended.push("#DA70D6");
+Colors.extended.push("#FF00FF");
+Colors.extended.push("#BA55D3");
+Colors.extended.push("#9370DB");
+Colors.extended.push("#8A2BE2");
+Colors.extended.push("#9400D3");
+Colors.extended.push("#9932CC");
+Colors.extended.push("#8B008B");
+Colors.extended.push("#800080");
+Colors.extended.push("#4B0082");
+Colors.extended.push("#6A5ACD");
+Colors.extended.push("#483D8B");
+Colors.extended.push("#7B68EE");
+
+Colors.extended.push("#ADFF2F");
+Colors.extended.push("#7FFF00");
+Colors.extended.push("#7CFC00");
+Colors.extended.push("#00FF00");
+Colors.extended.push("#32CD32");
+Colors.extended.push("#98FB98");
+Colors.extended.push("#90EE90");
+Colors.extended.push("#00FA9A");
+Colors.extended.push("#00FF7F");
+Colors.extended.push("#3CB371");
+
+Colors.extended.push("#2E8B57");
+Colors.extended.push("#228B22");
+Colors.extended.push("#008000");
+Colors.extended.push("#006400");
+Colors.extended.push("#9ACD32");
+Colors.extended.push("#6B8E23");
+Colors.extended.push("#808000");
+Colors.extended.push("#556B2F");
+Colors.extended.push("#66CDAA");
+Colors.extended.push("#8FBC8F");
+Colors.extended.push("#20B2AA");
+Colors.extended.push("#008B8B");
+Colors.extended.push("#008080");
+
+Colors.extended.push("#00FFFF");
+Colors.extended.push("#E0FFFF");
+Colors.extended.push("#AFEEEE");
+Colors.extended.push("#7FFFD4");
+Colors.extended.push("#40E0D0");
+Colors.extended.push("#48D1CC");
+Colors.extended.push("#00CED1");
+
+Colors.extended.push("#5F9EA0");
+Colors.extended.push("#4682B4");
+Colors.extended.push("#B0C4DE");
+Colors.extended.push("#B0E0E6");
+Colors.extended.push("#ADD8E6");
+Colors.extended.push("#87CEEB");
+Colors.extended.push("#87CEFA");
+
+
+Colors.extended.push("#00BFFF");
+Colors.extended.push("#1E90FF");
+Colors.extended.push("#6495ED");
+Colors.extended.push("#7B68EE");
+Colors.extended.push("#4169E1");
+Colors.extended.push("#0000FF");
+Colors.extended.push("#0000CD");
+Colors.extended.push("#00008B");
+Colors.extended.push("#000080");
+Colors.extended.push("#191970");
+
+Colors.extended.push("#FFF8DC");
+Colors.extended.push("#FFEBCD");
+Colors.extended.push("#FFE4C4");
+Colors.extended.push("#FFDEAD");
+Colors.extended.push("#F5DEB3");
+Colors.extended.push("#DEB887");
+Colors.extended.push("#D2B48C");
+Colors.extended.push("#BC8F8F");
+Colors.extended.push("#F4A460");
+Colors.extended.push("#DAA520");
+Colors.extended.push("#B8860B");
+Colors.extended.push("#CD853F");
+Colors.extended.push("#D2691E");
+Colors.extended.push("#8B4513");
+Colors.extended.push("#A0522D");
+Colors.extended.push("#A52A2A");
+Colors.extended.push("#800000");
+
+Colors.extended.push("#FFFFFF");
+Colors.extended.push("#FFFAFA");
+Colors.extended.push("#F0FFF0");
+Colors.extended.push("#F5FFFA");
+Colors.extended.push("#F0FFFF");
+Colors.extended.push("#F0F8FF");
+Colors.extended.push("#F8F8FF");
+Colors.extended.push("#F5F5F5");
+Colors.extended.push("#FFF5EE");
+Colors.extended.push("#F5F5DC");
+Colors.extended.push("#FDF5E6");
+Colors.extended.push("#FFFAF0");
+Colors.extended.push("#FFFFF0");
+Colors.extended.push("#FAEBD7");
+Colors.extended.push("#FAF0E6");
+Colors.extended.push("#FFF0F5");
+Colors.extended.push("#FFE4E1");
+
+Colors.extended.push("#DCDCDC");
+Colors.extended.push("#D3D3D3");
+Colors.extended.push("#C0C0C0");
+Colors.extended.push("#A9A9A9");
+Colors.extended.push("#808080");
+Colors.extended.push("#696969");
+Colors.extended.push("#778899");
+Colors.extended.push("#708090");
+Colors.extended.push("#2F4F4F");
+Colors.extended.push("#000000");
+
+Colors.simple.push("#e6194b");
+Colors.simple.push("#3cb44b");
+Colors.simple.push("#ffe119");
+Colors.simple.push("#0082c8");
+Colors.simple.push("#f58231");
+Colors.simple.push("#911eb4");
+Colors.simple.push("#46f0f0");
+Colors.simple.push("#f032e6");
+Colors.simple.push("#d2f53c");
+Colors.simple.push("#fabebe");
+Colors.simple.push("#008080");
+Colors.simple.push("#e6beff");
+Colors.simple.push("#aa6e28");
+Colors.simple.push("#fffac8");
+Colors.simple.push("#800000");
+Colors.simple.push("#aaffc3");
+Colors.simple.push("#808000");
+Colors.simple.push("#ffd8b1");
+Colors.simple.push("#000080");
+Colors.simple.push("#808080");
+Colors.simple.push("#FFFFFF");
+Colors.simple.push("#000000");
+*/
+
+

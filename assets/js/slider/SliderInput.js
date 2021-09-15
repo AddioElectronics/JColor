@@ -13,8 +13,10 @@ Example:
 
 
 Note:
-Change to class.
-
+Change from "function Slider" to "class Slider" .
+This is an absolute mess.
+To get all of the current functionality working quickly I absolutely butchered the code.
+Sorry, I dont have the time to rewrite it.
 */
 
 
@@ -74,16 +76,19 @@ function Slider(root, value, minV, maxV, /*bar, handle, input, */ type, units, s
     
     this.bar = root.find('.sbar, sbar');                //The bar element
     this.handle = root.find('.shandle, shandle');       //The handle element
-    this.input = root.find('input.slider-output');      //The input element
+    this.input = this.element.find('input');            //The input element
     
     if(this.bar.length == 0){
-        this.element.append('<sbar>');
+        if(this.element.attr('input') == 'left')
+            this.element.append('<sbar>');
+        else
+            this.element.prepend('<sbar>');
         this.bar = this.element.find('.sbar, sbar');
     }
     
     if(this.handle.length == 0){
         this.bar.append('<shandle>');
-        this.handle = root.find('.shandle, shandle');
+        this.handle = this.element.find('.shandle, shandle');
     }
         
     if(arguments.length > 4 && type !== undefined)
@@ -91,7 +96,19 @@ function Slider(root, value, minV, maxV, /*bar, handle, input, */ type, units, s
     else
         this.type = 'int';
     
-    this.usingInput = this.input.length == 1;           //Are we using the input, or just the slider?
+    this.usingInput = this.input.length == 1 || this.element.attr('input') !== undefined;           //Are we using the input, or just the slider?
+    
+    if(this.usingInput && this.input.length == 0){
+        if(this.element.attr('input') == 'left'){
+            this.element.prepend('<input  type="number"/>')
+            this.input = this.element.find('input');      //The input element
+        }else{
+            this.input = this.element.append('<input type="number"/>')
+            this.input = this.element.find('input');      //The input element
+        }
+        
+        this.input.attr('value', this.value);
+    }
     
     if(arguments.length > 5 && units !== undefined)
         this.units = units;                             //The type of units the value is
@@ -148,26 +165,25 @@ $(document).ready(function(){
 
 Slider.prototype.Setup = function(){
     
+    var slider = this;
+    
       //If the slider is using the input then we need to set the type
         if(this.usingInput){
             this.input.show();
             this.input.val(this.value);
             
-            //Make sure the input cannot go higher then the slider
-            this.input.attr('minlength', this.minValue);
-            this.input.attr('maxlength', this.maxValue);
 
             switch(this.type){
                 case "font-size":
                     //Make sure the input is type text so we can use letters
-                    $(this.input).attr('type', 'text');
+                    this.input.attr('type', 'text');
                     if(this.input.val().indexOf('pt') == -1 && this.input.val().indexOf('px') == -1){
                         this.input.val(this.value + "pt");
                     }
                     break;
-                case "measurement":     
+                case "units":     
                     //Make sure the input is type text so we can use letters
-                    $(this.input).attr('type', 'text');
+                    this.input.attr('type', 'text');
                     if(this.units != null){
                         this.input.val(this.value + this.units);
                     }else{
@@ -176,19 +192,24 @@ Slider.prototype.Setup = function(){
                     break;
                 case "variable":
                     //Make sure the input is type text so we can use letters
-                    $(this.input).attr('type', 'text');                    
+                    this.input.attr('type', 'text');                    
                     
                     //Get the unit from the value
                     var customUnit = this.input.val().replace(/[0-9]/g, '').replace('.', '');
                     
+                    
+                    
                     //If the custom unit is empty then we will use default unit
                     if(customUnit == ''){                    
-                        if(sthis.units != null){
+                        if(this.units != null){
                             this.input.val(this.value + this.units);
                         }else{
                             this.input.val(this.value);
                         }
                     }else{
+                        
+                        this.element.attr('units', customUnit);
+                        this.units = customUnit;
                         
                         //Unit has been set, it may be the same as the default,
                         //but it also could be something different like a percent sign
@@ -197,24 +218,33 @@ Slider.prototype.Setup = function(){
                     
                     break;
                 case "int":
-                    $(this.input).attr('type', 'number');
-                    //$(this.input).attr('steps', 1);
+                    //Make sure the input cannot go higher then the slider
+                    this.input.attr('minlength', this.minValue);
+                    this.input.attr('maxlength', this.maxValue);
+                    this.input.attr('type', 'number');
+                    
+                    //this.input.attr('steps', 1);
                     break;
                 case "float":
-                    $(this.input).attr('type', 'number');
+                    //Make sure the input cannot go higher then the slider
+                    this.input.attr('minlength', this.minValue);
+                    this.input.attr('maxlength', this.maxValue);
+                    this.input.attr('type', 'number');
                     break;
             }
 
             //if we change the input box then we will want to update the handle position
-            $(this.input).change(function(){
-                this.SetValue(this.input.val());
+            this.input.change(function(e){
+                slider.SetValue(slider.input.val(), true);
+                e.stopPropagation();
                 //this.CalculateHandlePosition(this.input.val());
             });
         }else{
             this.input.hide();
         }
         
-        this.CalculateHandlePosition(this.input.val());
+    this.SetValue(this.value);
+    this.CalculateHandlePosition(this.value);
 }
 
 
@@ -238,7 +268,6 @@ function SetupSliderObjects(){
             // $(value).find('.shandle, shandle'),     //The handle element
             // $(value).find('input.slider-output'),   //The input element
             $(value).attr('type'),                  //The type of slider, font-size, int, float
-            // $(value).attr('useInput') != null,      //Are we using the input element?
             $(value).attr('units'),                //The measurement unit that will be displayed, or default if using variable.
             $(value).attr('steps')                 //The custom step for the values
         ));
@@ -295,6 +324,7 @@ function MouseMoveSliderHandle(){
     //Makes sure the handle does not leave the bounds of the bar
     $.movingSlider.handle.css({left: (MathE.Clamp(mouseX, $.movingSlider.leftPos, $.movingSlider.rightPos)) - $.movingSlider.bar.offset().left - ($.movingSlider.handle.width() / 2) });
     $.movingSlider.CalculateSliderValue();
+    $.movingSlider.element.trigger('changing', $.movingSlider.value);
 }
 
 //Stop moving the slider handle.
@@ -348,7 +378,6 @@ function UpdateSliderProperties(sliderDOM){
     sliderObj.units = $slider.attr('units');
     sliderObj.step = Number($slider.attr('steps'));
     
-    sliderObj.usingInput = $slider.attr('useinput');
     
     if(sliderObj.usingInput){
         
@@ -368,10 +397,10 @@ function UpdateSliderProperties(sliderDOM){
                  //Make sure the input is type text so we can use letters
                     $($slider).attr('type', 'text');
                     if(sliderObj.input.val().indexOf('pt') == -1 && sliderObj.input.val().indexOf('px') == -1){
-                        sliderObj.input.val(sliders[index].value + "pt");
+                        sliderObj.input.val(sliderObj.value + "pt");
                     }
                     break;
-                case "measurement":
+                case "units":
                  //Make sure the input is type text so we can use letters
                     $(sliderObj.input).attr('type', 'text');
                     if(sliderObj.units != null){
@@ -382,30 +411,34 @@ function UpdateSliderProperties(sliderDOM){
                     break;
                 case "variable":
                     //Make sure the input is type text so we can use letters
-                    $(sliders[index].input).attr('type', 'text');                    
+                    sliderObj.input.attr('type', 'text');                    
                     
                     //Get the unit from the value
-                    var customUnit = sliders[index].input.val().replace(/[0-9]/g, '').replace('.', '');
+                    var customUnit = sliderObj.input.val().replace(/[0-9]/g, '').replace('.', '');
+                 
                     
                     //If the custom unit is empty then we will use default unit
-                    if(customUnit == ''){                    
-                        if(sliders[index].units != null){
-                            sliders[index].input.val(sliders[index].value + sliders[index].units);
+                    if(customUnit == ''){   
+                        if(sliderObj.units != null){
+                            sliderObj.input.val(sliderObj.value + sliderObj.units);
                         }else{
-                            sliders[index].input.val(sliders[index].value);
+                            sliderObj.input.val(sliderObj.value);
                         }
                     }else{
                         
+                        this.element.attr('units', customUnit);
+                        this.units = customUnit;
+                        
                         //Unit has been set, it may be the same as the default,
                         //but it also could be something different like a percent sign
-                        sliders[index].input.val(sliders[index].value.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '') + customUnit);
+                        sliderObj.input.val(sliderObj.value.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '') + customUnit);
                     }
                     
                     break;
                 case "int":
                     $(sliderObj.input).attr('type', 'number');
                     
-                    if(solderObj.step < 1)
+                    if(sliderObj.step < 1)
                         $(sliderObj.input).attr('steps', 1);
                     break;
                 case "float":
@@ -460,7 +493,7 @@ Slider.prototype.CalculateSliderValue = function (){
      
     //If the slider is hidden this function will not calculate a valid result
     //To maintain the value stop running the code
-    if($('#' + this.id).offsetParent === null) return;
+    if(this.element.offsetParent === null) return;
     
     //Change the value of the input box relative to the handle on the bar.
     var value = MathE.Map(this.handle.offset().left + (this.handle.width() / 2), this.leftPos, this.rightPos, this.minValue, this.maxValue);
@@ -475,21 +508,21 @@ Slider.prototype.CalculateSliderValue = function (){
             //We need to see if we are using pixels or points
             var units = this.input.val().indexOf('px') != -1 ? 'px' : 'pt'; 
             this.value = value + units;
-            $('#' + this.id).attr('value', value + units);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value + units);
+                this.input.val(this.value);
             }
             
         break;
-        case "measurement":
+        case "units":
              //We need to see if we are using pixels or points
             var units = this.units != null ? this.units : "";
             this.value = value + units; 
-            $('#' + this.id).attr('value', value + units);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value + units);
+                this.input.val(this.value);
             }
             break;
             
@@ -498,56 +531,66 @@ Slider.prototype.CalculateSliderValue = function (){
             //Get the unit from the value
             var customUnit = this.input.val().replace(/[0-9]/g, '').replace('.', '');
             
+            var unitIndex = 1;
+            
+            if(customUnit != ''){
+                this.element.attr('units', customUnit);
+                this.units = customUnit;
+                unitIndex = this.input.val().indexOf(customUnit);
+            }
+            
             //We need to see if we are using pixels or points
             //If the custom unit is null we will check if default are
-            var units =  customUnit != null ?  customUnit : (this.units != null ? this.units : "");
+            var units =  customUnit != "" ?  customUnit : (this.units != null ? this.units : "");            
             
+            this.value = unitIndex == 0 ? units + value : value + units; 
             
-            this.value = value + units; 
-            
-            $('#' + this.id).attr('value', value + units);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value + units);
+                this.input.val(this.value);
             }
             break;
             
         case "int":
             this.value = Math.round(value);
-            $('#' + this.id).attr('value', Math.round(value));
+            this.element.attr('value', Math.round(value));
             
             if(this.usingInput){
-                this.input.val(Math.round(value));
+                this.input.val(this.value);
             }
             break;
             
         default:
             this.value = value;
-            $('#' + this.id).attr('value', value);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value);
+                this.input.val(this.value);
             }
             break;
     }  
-    
-
-    //changed we must use this custom event
-    //this.element.trigger('SliderChange', this.value);
-    //this.element.trigger('change', this.value);
-    this.element.trigger('changing', this.value);
 }
 
-//Calculates the position of the slider, from the value in the input box.
+//Calculates the position of the slider
 Slider.prototype.CalculateHandlePosition = function (value){
     
-    //Don't allow the code to run if the input is not in use
-    if(!this.usingInput) return;
-    
-    //If the value is a string we will extract the number from it
-    if(typeof value == "string"){
-        value = value.match(/\d+/g).map(Number);       
+    if(arguments.length == 0){
+        value = this.value;
     }
+    
+    //Don't allow the code to run if the input is not in use
+    //if(!this.usingInput) return;
+    
+    var regex = /[+-]?\d+(\.\d+)?/g;
+
+    if(typeof value == "string")
+        value = value.match(regex).map(function(v) { return parseFloat(v); })[0];
+    
+    // //If the value is a string we will extract the number from it
+    // if(typeof value == "string"){
+    //     value = value.match(/\d+/g).map(Number);       
+    // }
     
     //If the value is over the max then set to max
     value = value > this.maxValue ? this.maxValue : value;
@@ -560,7 +603,7 @@ Slider.prototype.CalculateHandlePosition = function (value){
     
     //Change the reference values to the input value
     this.value = value;    
-    $('#' + this.id).attr('value', value);
+    this.element.attr('value', value);
     
     
     //Calculate the position from the value
@@ -579,7 +622,14 @@ Slider.prototype.CalculateHandlePosition = function (value){
     this.element.trigger('change', this.value);
 }
 
-Slider.prototype.SetValue = function(value){
+Slider.prototype.SetValue = function(value, dontChangeInput){
+    
+
+    var regex = /[+-]?\d+(\.\d+)?/g;
+
+    if(typeof value == "string")
+        value = value.match(regex).map(function(v) { return parseFloat(v); })[0];
+        //value = value.match(/\d+/)[0];
     
     //If the value is over the max then set to max
     value = value > this.maxValue ? this.maxValue : value;
@@ -593,21 +643,22 @@ Slider.prototype.SetValue = function(value){
             //We need to see if we are using pixels or points
             var units = this.input.val().indexOf('px') != -1 ? 'px' : 'pt'; 
             this.value = value + units;
-            $('#' + this.id).attr('value', value + units);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value + units);
+                this.input.val(this.value);
             }
             
         break;
-        case "measurement":
+        case "units":
              //We need to see if we are using pixels or points
             var units = this.units != null ? this.units : "";
+            
             this.value = value + units; 
-            $('#' + this.id).attr('value', value + units);
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value + units);
+                this.input.val(this.value);
             }
             break;
         case "variable":
@@ -615,34 +666,42 @@ Slider.prototype.SetValue = function(value){
             //Get the unit from the value
             var customUnit = this.input.val().replace(/[0-9]/g, '').replace('.', '');
             
+            var unitIndex = 1;
+            
+            if(customUnit != ''){
+                this.element.attr('units', customUnit);
+                this.units = customUnit;
+                unitIndex = this.input.val().indexOf(customUnit);
+            }
+            
             //We need to see if we are using pixels or points
             //If the custom unit is null we will check if default are
-            var units =  customUnit != null ?  customUnit : (this.units != null ? this.units : "");
+            var units =  customUnit != ""  ?  customUnit : (this.units != null ? this.units : "");                    
             
-
-            this.value = value ;//+ units; 
-            $('#' + this.id).attr('value', value);// + units);
+            this.value = unitIndex == 0 ? units + value : value + units;
+            
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(value);// + units);
+                this.input.val(this.value);
             }
             break;
             
         case "int":
             this.value = Math.round(value);
-            $('#' + this.id).attr('value', Math.round(value));
+            this.element.attr('value', this.value);
             
             if(this.usingInput){
-                this.input.val(Math.round(value));
+                this.input.val(this.value);
             }
             break;
             
         default:
             this.value = value;
-            $('#' + this.id).attr('value', value);
+            this.element.attr('value', this.value);
             
-            if(this.usingInput){
-                this.input.val(value);
+            if(this.usingInput && (arguments.length == 0 || !dontChangeInput)){
+                this.input.val(this.value);
             }
             break;
     }  

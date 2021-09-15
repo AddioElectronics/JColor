@@ -17,6 +17,7 @@ colorwindow:not(.open), .color-picker:not(.open) {
   /*background-color: #1f2325;*/
   --colorwindow-border-radius: 10px;
   border-radius: var(--colorwindow-border-radius);
+  color: #dddddd;
 }
 
 colorwindow #cp_colorwall, .color-picker #cp_colorwall {

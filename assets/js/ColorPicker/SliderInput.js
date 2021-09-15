@@ -13,9 +13,9 @@ Example:
 
 
 Note:
-Change to class. 
+Change from "function Slider" to "class Slider" .
 This is an absolute mess.
-I just added code to get it working, but made it even worse than it was.
+To get all of the current functionality working quickly I absolutely butchered the code.
 Sorry, I dont have the time to rewrite it.
 */
 
@@ -324,6 +324,7 @@ function MouseMoveSliderHandle(){
     //Makes sure the handle does not leave the bounds of the bar
     $.movingSlider.handle.css({left: (MathE.Clamp(mouseX, $.movingSlider.leftPos, $.movingSlider.rightPos)) - $.movingSlider.bar.offset().left - ($.movingSlider.handle.width() / 2) });
     $.movingSlider.CalculateSliderValue();
+    $.movingSlider.element.trigger('changing', $.movingSlider.value);
 }
 
 //Stop moving the slider handle.

@@ -18,4 +18,5 @@ $(document).ready(function(){
     $('#testColor').on('change', function(event, color){
         $('#example_heading').css('color', color);
     });
+    
 });

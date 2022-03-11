@@ -712,26 +712,41 @@ transparency">Transparency</label>\
         });   
         
         //Delete the palette when the delete button is clicked
-        ColorPicker.Object.favDelete.on('click', function(){
-            
-            //First delete the palette while we still have the selected option
-            ColorPicker.Object.palettes.find('[palette='+ColorPicker.Object.favouriteSelect.val()+']').remove();    
-            
-            //Delete the array
-            delete ColorPicker.Object.userColors[ColorPicker.Object.favouriteSelect.val()];
-            
-            //After we remove the palette we can remove the option from the select
-            ColorPicker.Object.favouriteSelect.find(':selected').remove();
-            
-            //Set the favourite select back to the old palette
-            ColorPicker.Object.favouriteSelect.val(ColorPicker.Object.favouriteSelect.find('option').val());
-            
-            //Hide the button
-            ColorPicker.Object.favDelete.removeClass('show');
-            
-            
+        ColorPicker.Object.favDelete.on('click', function(){            
+            ColorPicker.DeletePalette(ColorPicker.Object.favouriteSelect.val());
         });
         
+    }
+    
+    static DeletePalette(name){
+        
+        if(ColorPicker.Object.userColors[name] == null) return;
+        
+        //First delete the palette while we still have the selected option
+        ColorPicker.Object.palettes.find('[palette='+name+']').remove();    
+            
+        //Delete the array
+        delete ColorPicker.Object.userColors[name];
+            
+        //After we remove the palette we can remove the option from the select
+        ColorPicker.Object.favouriteSelect.find(':selected').remove();
+            
+        //Set the favourite select back to the old palette
+        ColorPicker.Object.favouriteSelect.val(ColorPicker.Object.favouriteSelect.find('option').val());
+            
+        //Hide the button
+        ColorPicker.Object.favDelete.removeClass('show');
+    }
+    
+    static ClearPalette(name){
+        if(ColorPicker.Object.userColors[name] == null) return;
+        
+        //First delete the palette while we still have the selected option
+        ColorPicker.Object.palettes.find('[palette='+name+']').html(''); 
+        
+        //Delete the array and recreate it
+        delete ColorPicker.Object.userColors[name];
+        ColorPicker.Object.userColors[name] = [];
     }
 
     //Setup events for importing and exporting palettes.
@@ -757,6 +772,73 @@ transparency">Transparency</label>\
         });
 
         
+    }
+    
+    static AddPallete(name, colors){
+        
+        if(colors instanceof String)
+            colors = JSON.parse(colors);
+        
+         if(Object.keys(colors)[0] == name)
+            colors = colors[name];
+         
+        //attribute checker : just checking to see if the palette exists
+        var ac = $('[palette='+ name +']').attr('palette');
+
+        //If there is no palette with the name then we need to create one
+        if(ac == null || ac == 'undefined'){
+            ColorPicker.CreatePalette(name);
+        }else{
+            ColorPicker.ActivateFavourite(name);
+            ColorPicker.ClearPalette(name);
+        }
+        
+        //Overwrite the palette with our new array
+        ColorPicker.Object.userColors[name] = colors;
+            
+        //Log it to the console
+        console.log('Loaded Palette : ' + name + " | Colors : " + colors.length);
+            
+        //Create all the color elements so the user can select them.
+        for(var i = 0; i < colors.length; i++){
+            ColorPicker.CreateColorElement($('[palette='+ name +']'), colors[i]);
+        }
+        
+        ColorPicker.StorePalette(name, colors);
+    }
+    
+    //Store use palette in local storage
+    static StorePalette(name, colors){
+        var palObj = localStorage.getItem('palettes');
+        if(palObj == null) 
+            palObj = {};
+        else
+            palObj = JSON.parse(palObj);
+        
+        palObj[name] = colors;
+        
+        var jpalettes = JSON.stringify(palObj, null, 2);
+        
+        localStorage.setItem('palettes', jpalettes);
+    }
+    
+    //Store all user palettes in local storage
+    static StorePalettes(){
+        for(let key in ColorPicker.Object.userColors){
+            StorePalette(name, ColorPicker.Object.userColors[key]);
+        }
+    }
+    
+    static LoadLocalPalettes(){
+        var palettes = localStorage.getItem('palettes');
+        
+        if(palettes == null) return;
+        
+        var palObj = JSON.parse(palettes);
+        
+        for(let key in palObj){
+            ColorPicker.AddPallete(key, palObj[key]);
+        }
     }
     
     //Imports a .pal file and creates the palette.
@@ -789,28 +871,11 @@ transparency">Transparency</label>\
             //The reason we aren't using JSON.parse is because we want the user to be able to edit
             //and add colors easily, and directly to the .pal file.
             //All they need to do is add a color in web format (rgb, rgba, hex) and seperate them with |
-            var colors = fr.result.split('|');//JSON.parse(fr.result);
+            var colors = JSON.parse(fr.result);
             
-            //Overwrite the palette with our new array
-            ColorPicker.Object.userColors[palette] = colors;
+            var name = Object.keys(colors)[0];
             
-            //attribute checker : just checking to see if the palette exists
-            var ac = $('[palette='+ palette +']').attr('palette');
-
-            //If there is no palette with the name then we need to create one
-            if(ac == null || ac == 'undefined'){
-                ColorPicker.CreatePalette(palette);
-            }else{
-                ColorPicker.ActivateFavourite(palette);
-            }
-            
-            //Log it to the console
-            console.log('Loaded Palette : ' + palette + " | Colors : " + colors.length);
-            
-            //Create all the color elements so the user can select them.
-            for(var i = 0; i < colors.length; i++){
-                ColorPicker.CreateColorElement($('[palette='+ palette +']'), colors[i]);
-            }
+            ColorPicker.AddPallete(name, colors);
 
         };
         
@@ -822,34 +887,39 @@ transparency">Transparency</label>\
     //Exports the current favourite palette as a .pal file.
     static ExportFavouritePal() {
         
-        //Create the variable which we will store the array in (as a string)
-        //The reason we aren't using JSON.stringify is because we want the user to be able to edit
-        //and add colors easily, and directly to the .pal file.
-        //All they need to do is add a color in web format (rgb, rgba, hex) and seperate them with |
-        let dataStr =  ""; //JSON.stringify(ColorPicker.Object.userColors[ColorPicker.Object.favouriteSelect.val()]);
+        //Get name of palette and store
+        let name = ColorPicker.Object.favouriteSelect.val();        
         
-        //First we need to convert the color array into a JSON string.
+        //Store palette in temporary object.
+        let tempObj = {};
+        tempObj[name] = ColorPicker.Object.userColors[name];
+        
+        //Create the variable which we will store the array in (as a string)
+        let dataStr = JSON.stringify(tempObj, null, 2);
+        
+        
+        `//First we need to convert the color array into a JSON string.
         $.each(ColorPicker.Object.userColors[ColorPicker.Object.favouriteSelect.val()], function(index, value){            
             dataStr += value;
             
             //We don't want to add the splitter if its the last one, otherwise on import we will get a blank color
             if(ColorPicker.Object.userColors[ColorPicker.Object.favouriteSelect.val()].length - 1 != index)
                 dataStr + '|';
-        }); 
+        }); `
          
-        //Then we will encode the json string into a temporary file.
+        //Encode the json string into a temporary file.
         let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
         
-        //Now we need to set our hidden links, link to our temporary file
+        //Set our Gidden links, and link to our temporary file
         ColorPicker.Object.favExportInput.setAttribute('href', dataUri);
         
         //Create a download attribute that has the name of our file
-        ColorPicker.Object.favExportInput.setAttribute('download', ColorPicker.Object.favouriteSelect.val() + '.pal');
+        ColorPicker.Object.favExportInput.setAttribute('download', name + '.pal');
         
         //Simulate a click on the link to begin the download
         ColorPicker.Object.favExportInput.click();        
         
-        console.log('Exported Palette : ' + ColorPicker.Object.favouriteSelect.text() + " | Colors : " + ColorPicker.Object.userColors[ColorPicker.Object.favouriteSelect.val()].length);
+        console.log('Exported Palette : ' + name + " | Colors : " + tempObj[name].length);
     }
     
     //Add or remove current color from the selected palette.
@@ -964,7 +1034,9 @@ transparency">Transparency</label>\
                 
                 //Create the element and append it to the palette
                 ColorPicker.CreateColorElement($('[palette='+ list +']'), color);
-            }            
+            } 
+            
+            ColorPicker.StorePalette(list, ColorPicker.Object.userColors[list]);
         }
         
     }
@@ -988,8 +1060,10 @@ transparency">Transparency</label>\
         ColorPicker.Object.userColors[list].splice(index, 1); 
         //ColorPicker.Object.userColors[list].splice(ColorPicker.Object.userColors[list].indexOf(color), 1);     
         //$('[palette='+list+']').find('[style*="background-color: '+ color +';"]').remove();
-        $('[value="'+color+'"]').remove();
+        //$('#cp_palettes [value="'+color+'"]').remove();
+        $('#cp_palettes [palette="'+list+'"]').children().eq(index).remove();
         //$('[palette='+list+']').find('[style*="box-shadow: '+ color +' '+ ColorPicker.Object.boxshadow_overlay +';"], [value="'+color+'"]').remove();
+        ColorPicker.StorePalette(list, ColorPicker.Object.userColors[list]);
     }
     
     /*
@@ -2173,6 +2247,11 @@ transparency">Transparency</label>\
             ColorPicker.CreateColorElement($('[palette=basic]'), Colors["simple"][i]);
             //ColorPicker.CreateColorElement($('[palette=simple]'), Colors["simple"][i]);  
         }    
+        
+        //Load user palettes
+        ColorPicker.LoadLocalPalettes();
+        
+        ColorPicker.ActivateFavourite('favourite');
         
     }
     

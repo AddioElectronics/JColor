@@ -2,7 +2,7 @@ var EventMouseDown = new Set();
 
 var isMouseDown = false;
 
-//Create the event to call our functions.
+//Create the event to call the functions in the set.
 $(document).mousedown(CallEventMouseDown);
 
 function CallEventMouseDown(e){      

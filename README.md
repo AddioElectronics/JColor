@@ -13,15 +13,16 @@ Uses Jquery and Bootstrap.
 + Colour wall
 + Palettes
     + Built in palettes
-    + Custom Palettes
+    + Custom Palettes 
     + Importing/Exporting
     + All used Colors stored in the "Current" palette
     + "Session" stores favourites for the session only.
-    + Linking with Database (Not Implemented)
+    + Linking with Database ***1**
 + RGB or HEX Html
 + RGB or HSL Controls
 + Themes (Sort of, with CSS... Only partially implemented)
 
+***1** `Not implemented at this time`
 
 ## Required References
 

@@ -1,6 +1,6 @@
 var EventKeyDown = new Set();
 
-//Create the event to call our functions.
+//Create the event to call the functions in the set.
 $(document).keydown(CallEventKeyDown);
 
 function CallEventKeyDown(e){  

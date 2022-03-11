@@ -1,6 +1,6 @@
 var EventMouseMove = new Set();
 
-//Create the event to call our functions.
+//Create the event to call the functions in the set.
 $(document).mousemove(CallEventMouseMove);
 
 function CallEventMouseMove(e){  

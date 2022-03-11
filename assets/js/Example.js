@@ -19,4 +19,17 @@ $(document).ready(function(){
         $('#example_heading').css('color', color);
     });
     
+    //Will change value after done moving.
+    $('#testSlider').on('change', function(event, value){
+        $('#example_heading2').html('Change my value : ' + value);
+    });
+    
+    //Will constantly change value/
+      $('#testSlider2').on('changing', function(event, value){
+        $('#example_heading2').html('Change my value : ' + value);
+    });
+    
+
+
+
 });

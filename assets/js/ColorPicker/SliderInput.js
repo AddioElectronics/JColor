@@ -1,26 +1,3 @@
-/* How to use
-
-Attach an event using ".on" on the root element of the slider.
-
-Events
-change = triggered after the value has been changed.
-changing = triggered every frame the slider is moved
-
-Example:
- $('#slider1').on('change', function(event, value){        
-        alert(value);
-  });
-
-
-Note:
-Change from "function Slider" to "class Slider" .
-This is an absolute mess.
-To get all of the current functionality working quickly I absolutely butchered the code.
-Sorry, I dont have the time to rewrite it.
-*/
-
-
-
 //All sliders on the page stored as an object.
 //Contains all range and position data,
 //as well as the DOM elements for each item.

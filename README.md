@@ -8,6 +8,14 @@ Uses Jquery and Bootstrap.
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_custompalettes.png?raw=true)
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_advanctedtab.png?raw=true)
 
+#### Please Note
+> This is an old project from years ago that I never got to finish when I was first learning Web Design.
+> The code is very messy and disorganized.
+> I was contemplating releasing this in its current state, but the end result looks good, and it works.
+
+> This will not see updates for a long time, so if you are going to use this hoping it will be cleaned up, do not count on it.
+> A refactor is planned, but at the moment I do not have the time.
+
 ## Features
 
 + Colour wall
@@ -178,14 +186,6 @@ This IDE I was using does not allow previewing custom elements.
 So to be able to preview in the editor, custom elements had to be replaced with a div.
 On page load Javascript will convert "div.input-color" in to a "color" element.
 
-
-#### Please Note
-> This is an old project from years ago that I never got to finish when I was first learning Web Design.
-> The code is very messy and disorganized.
-> I was contemplating releasing this in its current state, but the end result looks good, and it works.
-
-> This will not see updates for a long time, so if you are going to use this hoping it will be cleaned up, do not count on it.
-> A refactor is planned, but at the moment I do not have the time.
 
 ## License
 

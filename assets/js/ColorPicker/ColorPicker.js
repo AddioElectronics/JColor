@@ -514,7 +514,7 @@ transparency">Transparency</label>\
             </div>\
             <div class="hsv-rgb_selector">\
                 <div id="cp_a_rgb" class="active"><label class="form-label">RGB</label></div>\
-                <div id="cp_a_hsv"><label class="form-label">HSL</label></div>\
+                <div id="cp_a_hsv"><label class="form-label">HSV</label></div>\
             </div>\
             <div id="cp_a_walltoggle">\
                 <div class="t-overlay"></div><i class="fa fa-plus"></i><i class="fa fa-minus"></i>\
@@ -1839,7 +1839,7 @@ transparency">Transparency</label>\
                 //Change the labels to their appropriate text
                 $('.cp_a_label.redhue').text("Hue");
                 $('.cp_a_label.greensaturation').text("Saturation");
-                $('.cp_a_label.bluebrightness').text("Lightness");
+                $('.cp_a_label.bluebrightness').text("Value");
                 break;
         }
     }

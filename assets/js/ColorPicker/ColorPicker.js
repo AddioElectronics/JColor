@@ -332,15 +332,7 @@ class ColorPicker{
     
     
     //Sets up Window and elements, and creates events.
-    static SetupColorPicker(){   
-
-        
-    /*
-    ::::    Need to write AJAX code to retrive favourite colors saved by account ::::
-        -Only for admin accounts?
-        -If not only admin, set a limit for saved favourites?
-    */
-    
+    static SetupColorPicker(){       
     //constructor(colorwindow, usingFavourites, wallcursor, hueBar, hueHandle, transBar, transHandle, valueinput, valuetype, lastColor, newColor) 
     
     ColorPicker.Object = new ColorPicker( 

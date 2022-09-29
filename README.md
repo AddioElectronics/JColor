@@ -1,12 +1,20 @@
 # JColor
 ## A custom HTML5 colour picker
-JColor is a custom HTML5 colour picker that features custom palettes with importing and exporting, and creating colors from RGB or HSL. 
+JColor is a custom HTML5 colour picker that features custom palettes with importing and exporting, and color selection in RGB or HSL. 
 Uses Jquery and Bootstrap.
 
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_colorwall.png?raw=true)
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_builtinpalettes.png?raw=true)
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_custompalettes.png?raw=true)
 ![](https://github.com/AddioElectronics/JColor/blob/main/images/colorpicker_advanctedtab.png?raw=true)
+
+#### Please Note
+> This is an old project from years ago that I never got to finish when I was first learning Web Design.
+> The code is very messy and disorganized.
+> I was contemplating releasing this in its current state, but the end result looks good, and it works.
+
+> This will not see updates for a long time, so if you are going to use this hoping it will be cleaned up, do not count on it.
+> A refactor is planned, but at the moment I do not have the time.
 
 ## Features
 
@@ -159,8 +167,7 @@ This is code I never got around to. For static websites you should have no probl
 - Not a lot of error/type checking. Most functions will expect the correct data and types.
 - Themes... The &lt;html&gt; or &lt;body&gt; element requires 'theme="dark"'.
 The original Website/Article builder project supported themes but the ColorPicker only worked with the dark theme.
-So if you don't add theme="dark" to either the body or html, it will not display the correct styling.
-It is an easy fix, just remove all the [theme=dark] from the style sheets, or create a new theme.
+So if you don't add theme="dark" to a parent element, it will not display the correct styling.
 - There are many problems with the &lt;slider&gt;, in the current state it should not be used outside of the ColorWindow.
 
 
@@ -175,27 +182,10 @@ color, .input-color{
     "styling...."
 }
 ```
-This project was created in BootstrapStudio, which does not allow previewing Custom Code.
-To be able to preview in the editor, a "color" element is replaced with a &lt;div class=".input=color"&gt;.
-On the page load Javascript then turns it into a "color" element.
-This is why you will see a bunch of seemingly unnecessary css.
+This IDE I was using does not allow previewing custom elements.
+So to be able to preview in the editor, custom elements had to be replaced with a div.
+On page load Javascript will convert "div.input-color" in to a "color" element.
 
-
-#### Please Note
-> This is an old project from years ago that I never got to finish, 
-> which also happens to be some of the first Javascript I've ever written.
-> It was apart of a larger Website/Article Builder I was working on for a website, and this had to be seperated from that.
-> I only spent the last 2 days disintegrating it from that project, and then patching it back together.
-> Because of those reasons, the code is ~~very messy and disorganized~~ butchered.
-> I attempted to make things (mostly the &lt;slider&gt;) stable outside of the &lt;colorwindow&gt;, 
-> but ultimately just butchered the code while trying to quickly add/finish/fix the functionality I had originally planned.
-
-> I was contemplating releasing this in its current state, but the end result looks good, it works fine for static designs,
-> and as long as you ignore the appearance of the code its not bad, so here it is.
-
-> This will not see updates for a long time, so if you are going to use this hoping it will be cleaned up,
-> do not count on it.
-> I do plan to rewrite a lot of the code, but I do not have the time.
 
 ## License
 
